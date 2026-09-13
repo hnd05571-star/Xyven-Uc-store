@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>XYVEN UC Store — Premium BGMI UC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ AUTH SCREEN ============ -->
+  <div id="authScreen" class="auth-screen">
+    <canvas id="authCanvas"></canvas>
+    <div class="auth-bg-glow"></div>
+    <div class="auth-content glass">
+      <div class="auth-badge">🎮 XYVEN UC STORE</div>
+      <h1 class="auth-title">WELCOME <span class="neon">BACK</span></h1>
+      <p class="auth-sub">Sign in to continue your BGMI UC purchase</p>
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="signin">SIGN IN</button>
+        <button class="auth-tab" data-tab="signup">SIGN UP</button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <form id="signinForm" class="auth-form">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="signinUser" placeholder="Enter username" autocomplete="username">
+          <span class="error-msg">Username required</span>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signinPass" placeholder="Enter password" autocomplete="current-password">
+          <span class="error-msg">Password required</span>
+        </div>
+        <button type="submit" class="btn-primary">SIGN IN →</button>
+      </form>
+
+      <!-- SIGN UP FORM -->
+      <form id="signupForm" class="auth-form hidden">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="signupUser" placeholder="Choose a username" autocomplete="username">
+          <span class="error-msg">Min 3 characters</span>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signupPass" placeholder="Create password" autocomplete="new-password">
+          <span class="error-msg">Min 6 characters</span>
+        </div>
+        <div class="input-group">
+          <label>Confirm Password</label>
+          <input type="password" id="signupConfirm" placeholder="Re-enter password" autocomplete="new-password">
+          <span class="error-msg">Passwords don't match</span>
+        </div>
+        <button type="submit" class="btn-primary">CREATE ACCOUNT →</button>
+      </form>
+
+      <p class="auth-note">🔒 Your data is encrypted &amp; secure</p>
+    </div>
+  </div>
+
+  <!-- ============ INTRO SCREEN ============ -->
+  <div id="introScreen" class="intro-screen hidden">
+    <canvas id="particleCanvas"></canvas>
+    <div class="intro-bg-glow"></div>
+    <div class="intro-content glass">
+      <div class="intro-badge">🎮 BGMI UC MARKETPLACE</div>
+      <h1 class="intro-title">WELCOME TO <span class="neon">XYVEN UC</span></h1>
+      <p class="intro-sub">Premium • Fast • Trusted</p>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p class="progress-text" id="progressText">Initializing... 0%</p>
+      <button class="btn-primary" id="enterBtn" disabled>ENTER UC STORE →</button>
+    </div>
+  </div>
+
+  <!-- ============ MAIN APP ============ -->
+  <div id="mainApp" class="main-app hidden">
+
+    <!-- STICKY HEADER -->
+    <header class="sticky-header glass">
+      <div class="header-left">
+        <span class="logo">XYVEN <span class="neon">UC</span></span>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="notifBtn" title="Notifications">
+          🔔
+          <span class="notif-badge hidden" id="notifBadge">0</span>
+        </button>
+        <div class="wallet-card glass" id="walletCard">
+          <div class="wallet-info">
+            <span class="wallet-label">Wallet</span>
+            <span class="wallet-amount" id="walletAmount">₹0</span>
+          </div>
+          <button class="wallet-add" id="walletAddBtn">+</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- USER BAR -->
+    <div class="user-bar glass">
+      <span class="user-avatar" id="userAvatar">U</span>
+      <span class="user-name" id="userName">User</span>
+    </div>
+
+    <!-- STORE SCREEN -->
+    <section id="storeScreen" class="screen active">
+      <h2 class="section-title">CHOOSE YOUR <span class="neon">PLAN</span></h2>
+      <p class="sub-text">Instant UC delivery • 24/7 support</p>
+
+      <div class="plan-grid" id="planGrid"></div>
+
+      <div class="inventory-tag glass">
+        <span class="dot"></span> UC Inventory: <strong>100,000+</strong>
+      </div>
+
+      <button class="btn-primary" id="selectPlanBtn" disabled>SELECT & CONTINUE →</button>
+      <button class="btn-outline" id="couponBtn">🎟️ CLAIM COUPON</button>
+    </section>
+
+    <!-- DEPOSIT -->
+    <section id="depositScreen" class="screen">
+      <button class="back-btn" data-back>← Back</button>
+      <h2 class="section-title">DEPOSIT <span class="neon">FUNDS</span></h2>
+      <p class="sub-text">Deposit first to enjoy uninterrupted service</p>
+
+      <div class="glass info-card">
+        <div class="info-row"><span>Minimum Deposit</span><strong>₹200</strong></div>
+      </div>
+
+      <div id="depositStep1" class="glass form-card">
+        <label class="field-label">Enter Amount to Deposit</label>
+        <div class="input-group">
+          <input type="tel" id="depositAmount" placeholder="₹ Enter amount" inputmode="numeric">
+          <span class="error-msg" id="depositError">Minimum ₹200 required</span>
+        </div>
+        <button class="btn-primary" id="depositNextBtn">NEXT →</button>
+      </div>
+
+      <div id="depositStep2" class="hidden">
+        <div class="glass upi-card">
+          <label>UPI ID</label>
+          <div class="upi-row">
+            <span class="upi-id" id="upiId">harshsinghs@fam</span>
+            <button class="copy-btn" id="copyUpiBtn">Copy</button>
+          </div>
+        </div>
+        <div class="qr-wrap glass">
+          <div class="qr-container" id="qrContainer"></div>
+          <p class="qr-amount">Amount: <strong id="qrAmount">₹0</strong></p>
+          <div class="timer" id="timer">02:30</div>
+          <p class="qr-note">Scan &amp; pay via any UPI app</p>
+        </div>
+        <button class="btn-primary" id="paidBtn">I HAVE PAID</button>
+        <p class="pending-msg hidden" id="pendingMsg">⏳ Payment verification pending — Admin will confirm shortly</p>
+      </div>
+    </section>
+
+    <!-- COUPON -->
+    <section id="couponScreen" class="screen">
+      <button class="back-btn" data-back>← Back</button>
+      <h2 class="section-title">CLAIM <span class="neon">COUPON</span></h2>
+      <p class="sub-text">Enter your exclusive coupon code</p>
+
+      <div class="glass form-card">
+        <label class="field-label">Coupon Code</label>
+        <div class="input-group">
+          <input type="text" id="couponInput" placeholder="Enter code" style="text-transform:uppercase;">
+          <span class="error-msg" id="couponError">Invalid or expired coupon</span>
+        </div>
+        <button class="btn-primary" id="applyCouponBtn">APPLY COUPON →</button>
+      </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section id="detailsScreen" class="screen">
+      <button class="back-btn" data-back>← Back</button>
+      <h2 class="section-title">ENTER YOUR <span class="neon">DETAILS</span></h2>
+
+      <div class="glass form-card">
+        <div class="input-group">
+          <label>BGMI UID</label>
+          <input type="tel" id="uidInput" placeholder="Enter your BGMI UID" inputmode="numeric">
+          <span class="error-msg">Invalid UID (8-12 digits)</span>
+        </div>
+        <div class="input-group">
+          <label>Gmail</label>
+          <input type="email" id="gmailInput" placeholder="yourname@gmail.com" inputmode="email">
+          <span class="error-msg">Invalid email</span>
+        </div>
+        <div class="input-group">
+          <label>WhatsApp / Support Number</label>
+          <input type="tel" id="wpInput" placeholder="10-digit number" maxlength="10" inputmode="numeric">
+          <span class="error-msg">Invalid number</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="confirmBtn">CONFIRM REQUEST →</button>
+    </section>
+
+    <!-- ORDER STATUS -->
+    <section id="orderScreen" class="screen">
+      <h2 class="section-title">REQUEST <span class="neon">UC</span></h2>
+      <div class="glass order-card">
+        <div class="order-row"><span>Plan:</span><strong id="orderPlan">-</strong></div>
+        <div class="order-row"><span>UID:</span><strong id="orderUid">-</strong></div>
+        <div class="order-row"><span>Gmail:</span><strong id="orderGmail">-</strong></div>
+        <div class="order-row"><span>WhatsApp:</span><strong id="orderWp">-</strong></div>
+        <div class="order-row"><span>Order ID:</span><strong class="neon" id="orderId">-</strong></div>
+        <div class="order-row status-row">
+          <span>Status:</span>
+          <span class="status-pill pending" id="orderStatus">⏳ Pending</span>
+        </div>
+      </div>
+
+      <div class="glass status-flow">
+        <div class="status-step active">Pending</div>
+        <div class="status-step">Verifying</div>
+        <div class="status-step">Processing</div>
+        <div class="status-step">Approved</div>
+        <div class="status-step">Completed</div>
+      </div>
+
+      <button class="btn-primary" id="newOrderBtn">NEW ORDER</button>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker-wrap glass">
+      <div class="ticker-label">RECENT ACTIVITY</div>
+      <div class="ticker" id="ticker"></div>
+    </div>
+
+    <!-- NOTIFICATION PANEL -->
+    <div class="notif-panel hidden" id="notifPanel">
+      <div class="notif-header">
+        <h3>🔔 Notifications</h3>
+        <button class="notif-close" id="notifClose">✕</button>
+      </div>
+      <div class="notif-list" id="notifList">
+        <p class="notif-empty">No notifications yet</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal glass">
+      <div class="modal-icon" id="modalIcon">⚠️</div>
+      <h3 class="modal-title" id="modalTitle">Notice</h3>
+      <p class="modal-text" id="modalText">...</p>
+      <div class="modal-actions">
+        <button class="btn-outline" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalConfirm">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
